@@ -15,12 +15,21 @@ and plot methods, and a vignette, tests and a small sample DTM (GeoTIFF, about
 
 ## Test environments
 
-* local: macOS, R 4.2.2
+* local: macOS (x86_64-apple-darwin17.0), R 4.2.2, terra 1.7-3 (the minimum
+  version declared in DESCRIPTION)
 * win-builder: R-devel, R-release, R-oldrelease
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+* Possibly misspelled words in DESCRIPTION: "Jenness" is the surname of the
+  author of one of the cited references (Jenness 2006), and is spelled
+  correctly.
+
+The local macOS check also gave an environmental NOTE ("checking for future
+file timestamps ... unable to verify current time"), which arises only because
+the machine could not reach the remote time server.
 
 ## Reverse dependencies
 

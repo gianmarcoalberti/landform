@@ -14,4 +14,5 @@
 #' }
 #'
 #' @keywords internal
+#' @importFrom terra rast
 "_PACKAGE"
