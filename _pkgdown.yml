@@ -1,0 +1,33 @@
+url: ~
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left: [intro, reference, news]
+    right: [search]
+
+reference:
+- title: "Classification"
+  desc: >
+    Classify a DTM into slope-position or landform classes; the result is an
+    object with print(), summary() and plot() methods.
+  contents:
+  - landform
+  - plot.landform
+  - class_layers
+
+- title: "Topographic Position Index"
+  desc: "The TPI surface on which the classifications are based."
+  contents:
+  - tpi
+
+- title: "Sample data"
+  contents:
+  - malta_dtm
+
+articles:
+- title: "Get started"
+  contents:
+  - landform

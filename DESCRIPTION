@@ -1,0 +1,31 @@
+Package: landform
+Title: Topographic Position Index-Based Landform Classification
+Version: 0.3.0
+Authors@R: person("Gianmarco", "Alberti", email = "gianmarcoalberti@gmail.com", role = c("aut", "cre"))
+Description: Classifies a landscape into slope-position and landform classes on the
+    basis of the Topographic Position Index (TPI) and slope, following
+    Weiss (2001, Topographic Position and Landforms Analysis, ESRI User
+    Conference) and Jenness (2006, TPI extension for ArcView 3.x). Two
+    classifications are offered: a six-class Slope Position
+    Classification, based on one TPI scale, and a ten-class Landform
+    Classification, based on a small and a large TPI scale. The TPI can be
+    computed over square, circular or annular neighbourhoods, sized in
+    cells or in map units, and standardised either over the whole grid (as
+    in the original method) or locally. Results are returned as an object
+    holding the classified raster, the TPI and slope surfaces, and
+    per-class descriptive statistics, with methods for printing,
+    summarising and plotting.
+Depends: R (>= 4.1.0)
+Imports:
+    graphics,
+    grDevices,
+    terra (>= 1.7-3)
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+License: GPL (>= 2)
+Encoding: UTF-8
+Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0

@@ -1,0 +1,19 @@
+# RStudio
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# R build artefacts
+*.tar.gz
+*.Rcheck/
+
+# macOS
+.DS_Store
+
+# misc
+/doc/
+/Meta/
+
+# pkgdown site (built by GitHub Actions)
+docs/
