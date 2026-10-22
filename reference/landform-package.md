@@ -34,3 +34,7 @@ Useful links:
 ## Author
 
 **Maintainer**: Gianmarco Alberti <gianmarcoalberti@gmail.com>
+
+Authors:
+
+- Gianmarco Alberti <gianmarcoalberti@gmail.com>
