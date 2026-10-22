@@ -15,9 +15,10 @@ and plot methods, and a vignette, tests and a small sample DTM (GeoTIFF, about
 
 ## Test environments
 
-* local: macOS (x86_64-apple-darwin17.0), R 4.2.2, terra 1.7-3 (the minimum
-  version declared in DESCRIPTION)
-* win-builder: R-devel, R-release, R-oldrelease
+* local: macOS (x86_64-apple-darwin17.0), R 4.2.2, with terra 1.7-3 (the
+  minimum version declared in DESCRIPTION)
+* win-builder: R-devel (2026-10-21 r90733), R-release (4.6.1),
+  R-oldrelease (4.5.3)
 
 ## R CMD check results
 
