@@ -31,5 +31,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Gianmarco Alberti \email{gianmarcoalberti@gmail.com}
 
+Authors:
+\itemize{
+  \item Gianmarco Alberti \email{gianmarcoalberti@gmail.com}
+}
+
 }
 \keyword{internal}
