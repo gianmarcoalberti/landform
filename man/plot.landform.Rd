@@ -7,7 +7,7 @@
 \method{plot}{landform}(
   x,
   what = c("classes", "area", "tpi"),
-  hillshade = FALSE,
+  shade = c("none", "slope", "hill"),
   alpha = 0.6,
   leg.pos = NULL,
   leg.cex = 0.8,
@@ -21,13 +21,14 @@
 \item{what}{What to plot: \code{"classes"} (default), \code{"area"}, or
 \code{"tpi"}.}
 
-\item{hillshade}{Logical. For \code{what = "classes"}, draw the classes
-semi-transparently over a hillshade of the elevation raster. Default
-\code{FALSE}.}
+\item{shade}{Relief shading drawn underneath the classes or the TPI:
+\code{"none"} (default), \code{"slope"} (a slopeshade, that is the
+slope in grey levels from white for flat terrain to black for the
+steepest slopes), or \code{"hill"} (a hillshade, lit from the
+north-west at 45 degrees). See Details.}
 
-\item{alpha}{Opacity of the classes relative to the hillshade drawn over
-them (0 to 1; the hillshade is drawn with opacity \code{1 - alpha}).
-Default \code{0.6}.}
+\item{alpha}{Opacity (0 to 1) of the classes or TPI drawn over the shading.
+Default \code{0.6}. Ignored when \code{shade = "none"}.}
 
 \item{leg.pos}{Legend position for the map (a \code{\link[graphics]{legend}}
 keyword); \code{NULL} (default) places it outside the map, to its right.}
@@ -47,12 +48,19 @@ Plots the map of the classes, a bar plot of the area of each class, or the
 standardised TPI surface(s), from an object returned by
 \code{\link{landform}}.
 }
+\details{
+A slopeshade conveys relief without the directional bias of a hillshade:
+features facing away from the light are not darkened, and steepness is
+shown in the same way whatever the aspect. The grey scale is stretched
+between 0 degrees and the 99th percentile of slope, so that a few very
+steep cells do not flatten the contrast elsewhere.
+}
 \examples{
 dem <- malta_dtm()
 sp <- landform(dem, scale = 9, plot = FALSE)
 plot(sp)
-plot(sp, hillshade = TRUE)
+plot(sp, shade = "slope")
 plot(sp, what = "area")
-plot(sp, what = "tpi")
+plot(sp, what = "tpi", shade = "slope", alpha = 0.5)
 
 }

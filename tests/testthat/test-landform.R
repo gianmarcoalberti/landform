@@ -97,7 +97,10 @@ test_that("print, summary and plot methods run", {
   grDevices::pdf(NULL)
   on.exit(grDevices::dev.off())
   expect_invisible(plot(r))
-  expect_invisible(plot(r, hillshade = TRUE))
+  expect_invisible(plot(r, shade = "slope"))
+  expect_invisible(plot(r, shade = "hill", alpha = 0.4))
+  expect_invisible(plot(r, what = "tpi", shade = "slope"))
+  expect_error(plot(r, shade = "slope", alpha = 2), "between 0 and 1")
   expect_invisible(plot(r, what = "area"))
   expect_invisible(plot(r, what = "tpi"))
   expect_invisible(landform(hill_dem(), 5, descriptive = TRUE,

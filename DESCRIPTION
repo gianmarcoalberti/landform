@@ -17,6 +17,7 @@ Depends: R (>= 4.1.0)
 Imports:
     graphics,
     grDevices,
+    stats,
     terra (>= 1.7-3)
 Suggests:
     knitr,
@@ -24,6 +25,9 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 License: GPL (>= 2)
+URL: https://gianmarcoalberti.github.io/landform/,
+    https://github.com/gianmarcoalberti/landform
+BugReports: https://github.com/gianmarcoalberti/landform/issues
 Encoding: UTF-8
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0

@@ -70,7 +70,10 @@ the default settings, results differ from those of earlier versions.
   Classification (both replace `rainbow()`). Custom colours via `col`.
 * The legend is placed outside the map by default, so that no data are hidden
   (`leg.pos` still accepts the usual keywords).
-* Optional hillshade underlay (`hillshade = TRUE`).
+* Optional relief shading underneath the classes or the TPI: a slopeshade
+  (`shade = "slope"`, slope in grey levels from white for flat terrain to
+  black for the steepest slopes) or a hillshade (`shade = "hill"`), with the
+  overlying layer drawn semi-transparently (`alpha`).
 * The bar plot of class areas is horizontal and labelled with class names.
 * `plot(x, what = "tpi")` maps the standardised TPI surface(s).
 * `plot = FALSE` suppresses plotting.

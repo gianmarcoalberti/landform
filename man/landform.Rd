@@ -22,7 +22,7 @@ landform(
   lf.thr = 1,
   slope.thr = 5,
   plot = TRUE,
-  hillshade = FALSE,
+  shade = c("none", "slope", "hill"),
   col = NULL
 )
 }
@@ -88,8 +88,9 @@ terrain. Default \code{5} (Weiss 2001).}
 
 \item{plot}{Logical. Draw the map of the classes? Default \code{TRUE}.}
 
-\item{hillshade}{Logical. Draw the classes semi-transparently over a
-hillshade? Default \code{FALSE}.}
+\item{shade}{Relief shading drawn underneath the classes: \code{"none"}
+(default), \code{"slope"} (slopeshade) or \code{"hill"} (hillshade).
+See \code{\link{plot.landform}}.}
 
 \item{col}{Optional vector of colours, one per class. By default the
 Slope Position Classification uses an ordinal blue-to-brown palette
@@ -193,8 +194,8 @@ lf <- landform(dem, class.type = "landform.classification",
 sp_local <- landform(dem, scale = 9, std = "local", centre = TRUE)
 }
 
-# the same, over a hillshade, with the bar plot of class areas
-plot(lf, hillshade = TRUE)
+# the same, over a slopeshade, with the bar plot of class areas
+plot(lf, shade = "slope")
 plot(lf, what = "area")
 
 # one layer per class

@@ -137,11 +137,15 @@ in degrees, are:
 
 All three thresholds can be changed with `tpi.thr` and `slope.thr`.
 
-The classes can be drawn semi-transparently over a hillshade, which helps
-relate them to the relief:
+The classes can be drawn semi-transparently over a relief shading, which
+helps relate them to the terrain. A slopeshade (`shade = "slope"`) shows the
+slope in grey levels, from white for flat ground to black for the steepest
+slopes; unlike a hillshade (`shade = "hill"`), it does not darken features
+just because they face away from the light. The opacity of the classes is set
+by `alpha`:
 
-```{r sp-hillshade}
-plot(sp, hillshade = TRUE)
+```{r sp-slopeshade}
+plot(sp, shade = "slope")
 ```
 
 Since the classification depends on the scale, a broader neighbourhood picks
@@ -160,7 +164,7 @@ high (≥ 1) values; plains and open slopes are separated by slope.
 ```{r lf}
 lf <- landform(dem, class.type = "landform.classification",
                sn = 200, ln = 1000, units = "map", shape = "circle",
-               hillshade = TRUE)
+               shade = "slope")
 ```
 
 | Class | SN | LN |
@@ -177,10 +181,11 @@ lf <- landform(dem, class.type = "landform.classification",
 | 10 Mountain Tops, High Ridges             | ≥ 1 | ≥ 1 |
 
 The two standardised TPI surfaces on which the classification rests can be
-plotted directly (the colour scale is capped at ±3 standard deviations):
+plotted directly, here over a slopeshade (the colour scale is capped at ±3
+standard deviations):
 
 ```{r lf-tpi, fig.height = 4}
-plot(lf, what = "tpi")
+plot(lf, what = "tpi", shade = "slope")
 ```
 
 ## What `landform()` returns

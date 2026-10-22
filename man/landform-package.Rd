@@ -19,13 +19,17 @@ Main functions:
   \item \code{\link{malta_dtm}}: a sample digital terrain model.
 }
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://gianmarcoalberti.github.io/landform/}
+  \item \url{https://github.com/gianmarcoalberti/landform}
+  \item Report bugs at \url{https://github.com/gianmarcoalberti/landform/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Gianmarco Alberti \email{gianmarcoalberti@gmail.com}
-
-Authors:
-\itemize{
-  \item Gianmarco Alberti \email{gianmarcoalberti@gmail.com}
-}
 
 }
 \keyword{internal}

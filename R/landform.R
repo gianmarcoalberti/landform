@@ -52,8 +52,9 @@
 #' @param slope.thr Slope threshold, in degrees, separating flat from sloping
 #'   terrain. Default \code{5} (Weiss 2001).
 #' @param plot Logical. Draw the map of the classes? Default \code{TRUE}.
-#' @param hillshade Logical. Draw the classes semi-transparently over a
-#'   hillshade? Default \code{FALSE}.
+#' @param shade Relief shading drawn underneath the classes: \code{"none"}
+#'   (default), \code{"slope"} (slopeshade) or \code{"hill"} (hillshade).
+#'   See \code{\link{plot.landform}}.
 #' @param col Optional vector of colours, one per class. By default the
 #'   Slope Position Classification uses an ordinal blue-to-brown palette
 #'   (valley to ridge) that remains readable with the common forms of colour
@@ -160,8 +161,8 @@
 #' sp_local <- landform(dem, scale = 9, std = "local", centre = TRUE)
 #' }
 #'
-#' # the same, over a hillshade, with the bar plot of class areas
-#' plot(lf, hillshade = TRUE)
+#' # the same, over a slopeshade, with the bar plot of class areas
+#' plot(lf, shade = "slope")
 #' plot(lf, what = "area")
 #'
 #' # one layer per class
@@ -175,13 +176,15 @@ landform <- function(x, scale = 3, sn = 3, ln = 7,
                      shape = c("square", "circle", "annulus"), inner = NULL,
                      centre = FALSE, std = c("global", "local"),
                      tpi.thr = c(0.5, 1), lf.thr = 1, slope.thr = 5,
-                     plot = TRUE, hillshade = FALSE, col = NULL) {
+                     plot = TRUE, shade = c("none", "slope", "hill"),
+                     col = NULL) {
 
   # --- check the arguments ---------------------------------------------------
   class.type <- match.arg(class.type)
   units <- match.arg(units)
   shape <- match.arg(shape)
   std <- match.arg(std)
+  shade <- match.arg(shade)
   x <- .lf_check_raster(x)
   if (!is.numeric(tpi.thr) || length(tpi.thr) != 2 || any(tpi.thr <= 0) ||
       tpi.thr[1] >= tpi.thr[2]) {
@@ -268,7 +271,7 @@ landform <- function(x, scale = 3, sn = 3, ln = 7,
   class(out) <- "landform"
 
   if (plot) {
-    plot.landform(out, what = "classes", hillshade = hillshade,
+    plot.landform(out, what = "classes", shade = shade,
                   leg.pos = leg.pos, leg.cex = leg.cex)
     if (descriptive) plot.landform(out, what = "area")
     return(invisible(out))
@@ -404,12 +407,13 @@ summary.landform <- function(object, ...) {
 #' @param x An object of class \code{"landform"}.
 #' @param what What to plot: \code{"classes"} (default), \code{"area"}, or
 #'   \code{"tpi"}.
-#' @param hillshade Logical. For \code{what = "classes"}, draw the classes
-#'   semi-transparently over a hillshade of the elevation raster. Default
-#'   \code{FALSE}.
-#' @param alpha Opacity of the classes relative to the hillshade drawn over
-#'   them (0 to 1; the hillshade is drawn with opacity \code{1 - alpha}).
-#'   Default \code{0.6}.
+#' @param shade Relief shading drawn underneath the classes or the TPI:
+#'   \code{"none"} (default), \code{"slope"} (a slopeshade, that is the
+#'   slope in grey levels from white for flat terrain to black for the
+#'   steepest slopes), or \code{"hill"} (a hillshade, lit from the
+#'   north-west at 45 degrees). See Details.
+#' @param alpha Opacity (0 to 1) of the classes or TPI drawn over the shading.
+#'   Default \code{0.6}. Ignored when \code{shade = "none"}.
 #' @param leg.pos Legend position for the map (a \code{\link[graphics]{legend}}
 #'   keyword); \code{NULL} (default) places it outside the map, to its right.
 #' @param leg.cex Magnification of the legend text. Default \code{0.8}.
@@ -417,22 +421,33 @@ summary.landform <- function(object, ...) {
 #' @param ... Further arguments passed to \code{\link[terra]{plot}} (for maps)
 #'   or \code{\link[graphics]{barplot}} (for \code{what = "area"}).
 #'
+#' @details
+#' A slopeshade conveys relief without the directional bias of a hillshade:
+#' features facing away from the light are not darkened, and steepness is
+#' shown in the same way whatever the aspect. The grey scale is stretched
+#' between 0 degrees and the 99th percentile of slope, so that a few very
+#' steep cells do not flatten the contrast elsewhere.
+#'
 #' @return \code{x}, invisibly.
 #'
 #' @examples
 #' dem <- malta_dtm()
 #' sp <- landform(dem, scale = 9, plot = FALSE)
 #' plot(sp)
-#' plot(sp, hillshade = TRUE)
+#' plot(sp, shade = "slope")
 #' plot(sp, what = "area")
-#' plot(sp, what = "tpi")
+#' plot(sp, what = "tpi", shade = "slope", alpha = 0.5)
 #'
 #' @importFrom graphics barplot par
 #' @export
 plot.landform <- function(x, what = c("classes", "area", "tpi"),
-                          hillshade = FALSE, alpha = 0.6, leg.pos = NULL,
-                          leg.cex = 0.8, main = NULL, ...) {
+                          shade = c("none", "slope", "hill"), alpha = 0.6,
+                          leg.pos = NULL, leg.cex = 0.8, main = NULL, ...) {
   what <- match.arg(what)
+  shade <- match.arg(shade)
+  if (!is.numeric(alpha) || length(alpha) != 1 || alpha < 0 || alpha > 1) {
+    stop("'alpha' must be a single number between 0 and 1.", call. = FALSE)
+  }
   p <- x$params
   title <- if (p$class.type == "slope.position") {
     "Slope Position (Weiss 2001)"
@@ -446,26 +461,25 @@ plot.landform <- function(x, what = c("classes", "area", "tpi"),
     mar <- c(3.1, 3.1, 2.1, 3 + 0.45 * leg.cex * max(nchar(x$stats$class)))
     plg <- list(cex = leg.cex)
     if (!is.null(leg.pos)) plg$x <- leg.pos
-    if (hillshade) {
-      # classes first (opaque, with their legend), then a semi-transparent
-      # hillshade on top; this avoids colour-table transparency, which older
-      # versions of terra do not support
-      terra::plot(x$classes, main = main, plg = plg,
-                  mar = mar, ...)
-      sl <- terra::terrain(x$dem, v = "slope", unit = "radians")
-      as <- terra::terrain(x$dem, v = "aspect", unit = "radians")
-      hs <- terra::shade(sl, as, angle = 45, direction = 315)
-      terra::plot(hs, col = grDevices::grey(0:100 / 100), legend = FALSE,
-                  alpha = 1 - alpha, add = TRUE)
+    if (shade == "none") {
+      terra::plot(x$classes, main = main, plg = plg, mar = mar, ...)
     } else {
-      terra::plot(x$classes, main = main, plg = plg,
-                  mar = mar, ...)
+      .lf_plot_shade(x, shade, main = main, mar = mar)
+      # the classes as a plain numeric raster drawn with transparency (works
+      # with all supported versions of terra); colours and labels are
+      # restricted to the classes present, so that they match the legend
+      r <- terra::as.int(x$classes)
+      levels(r) <- NULL
+      present <- x$stats$code[x$stats$cells > 0]
+      i <- match(present, x$stats$code)
+      terra::plot(r, type = "classes", levels = x$stats$class[i],
+                  col = p$col[i], alpha = alpha, add = TRUE, plg = plg, ...)
     }
   }
 
   if (what == "area") {
     s <- x$stats
-    cols <- x$params$col
+    cols <- p$col
     if (is.null(main)) main <- title
     op <- par(mar = c(4.1, 15, 2.1, 1), no.readonly = TRUE)
     on.exit(par(op))
@@ -486,13 +500,46 @@ plot.landform <- function(x, what = c("classes", "area", "tpi"),
     lab <- if (p$class.type == "slope.position") {
       "Standardised TPI"
     } else {
-      c("Standardised TPI, small scale (SN)", "Standardised TPI, large scale (LN)")
+      c("Standardised TPI, small scale (SN)",
+        "Standardised TPI, large scale (LN)")
     }
-    terra::plot(z, col = grDevices::hcl.colors(101, "Blue-Red 3"),
-                range = c(-m, m), main = if (is.null(main)) lab else main,
-                ...)
+    if (!is.null(main)) lab <- rep_len(main, terra::nlyr(z))
+    pal <- grDevices::hcl.colors(101, "Blue-Red 3")
+    if (shade == "none") {
+      terra::plot(z, col = pal, range = c(-m, m), main = lab, ...)
+    } else {
+      n <- terra::nlyr(z)
+      op <- par(mfrow = c(1, n), no.readonly = TRUE)
+      on.exit(par(op), add = TRUE)
+      for (k in seq_len(n)) {
+        .lf_plot_shade(x, shade, main = lab[k], mar = c(3.1, 3.1, 2.1, 5.1))
+        terra::plot(z[[k]], col = pal, range = c(-m, m), alpha = alpha,
+                    add = TRUE, ...)
+      }
+    }
   }
   invisible(x)
+}
+
+# Draw a slopeshade or a hillshade as the base map
+.lf_plot_shade <- function(x, shade, main, mar) {
+  if (shade == "slope") {
+    s <- x$slope
+    top <- terra::global(s, fun = stats::quantile, probs = 0.99,
+                         na.rm = TRUE)[1, 1]
+    if (!is.finite(top) || top <= 0) top <- 1
+    base <- terra::clamp(s, 0, top)
+    # white = flat, black = steepest
+    cols <- grDevices::grey(seq(1, 0, length.out = 100))
+    terra::plot(base, col = cols, range = c(0, top), legend = FALSE,
+                main = main, mar = mar)
+  } else {
+    sl <- terra::terrain(x$dem, v = "slope", unit = "radians")
+    as <- terra::terrain(x$dem, v = "aspect", unit = "radians")
+    base <- terra::shade(sl, as, angle = 45, direction = 315)
+    terra::plot(base, col = grDevices::grey(0:100 / 100), legend = FALSE,
+                main = main, mar = mar)
+  }
 }
 
 #' One layer per class

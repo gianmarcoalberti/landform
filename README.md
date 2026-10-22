@@ -25,7 +25,7 @@ dem <- malta_dtm()
 # six-class Slope Position Classification, 9 x 9 cell window
 sp <- landform(dem, scale = 9)
 sp                  # class areas and percentages
-plot(sp, hillshade = TRUE)
+plot(sp, shade = "slope")
 
 # ten-class Landform Classification, circular neighbourhoods of 200 m and 1 km
 lf <- landform(dem, class.type = "landform.classification",
