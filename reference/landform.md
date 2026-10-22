@@ -1,11 +1,12 @@
 # Landform Classification
 
 Classifies a landscape into slope-position or landform classes on the
-basis of the Topographic Position Index (TPI; see [`tpi`](tpi.md)) and
-slope, following Weiss (2001) and Jenness (2006). Two classifications
-are available: the six-class Slope Position Classification, based on one
-TPI scale, and the ten-class Landform Classification, based on a small
-and a large TPI scale.
+basis of the Topographic Position Index (TPI; see
+[`tpi`](https://gianmarcoalberti.github.io/landform/reference/tpi.md))
+and slope, following Weiss (2001) and Jenness (2006). Two
+classifications are available: the six-class Slope Position
+Classification, based on one TPI scale, and the ten-class Landform
+Classification, based on a small and a large TPI scale.
 
 ## Usage
 
@@ -28,7 +29,7 @@ landform(
   lf.thr = 1,
   slope.thr = 5,
   plot = TRUE,
-  hillshade = FALSE,
+  shade = c("none", "slope", "hill"),
   col = NULL
 )
 ```
@@ -84,7 +85,8 @@ landform(
 - shape:
 
   Neighbourhood shape: `"square"` (default), `"circle"`, or `"annulus"`.
-  See [`tpi`](tpi.md).
+  See
+  [`tpi`](https://gianmarcoalberti.github.io/landform/reference/tpi.md).
 
 - inner:
 
@@ -96,13 +98,15 @@ landform(
 - centre:
 
   Logical. Include the focal cell in the neighbourhood mean? Default
-  `FALSE`. See [`tpi`](tpi.md).
+  `FALSE`. See
+  [`tpi`](https://gianmarcoalberti.github.io/landform/reference/tpi.md).
 
 - std:
 
   TPI standardisation: `"global"` (default; Weiss 2001, Jenness 2006) or
-  `"local"` (as in landform \<= 0.2). See [`tpi`](tpi.md) for the
-  difference, which can be substantial.
+  `"local"` (as in landform \<= 0.2). See
+  [`tpi`](https://gianmarcoalberti.github.io/landform/reference/tpi.md)
+  for the difference, which can be substantial.
 
 - tpi.thr:
 
@@ -124,10 +128,11 @@ landform(
 
   Logical. Draw the map of the classes? Default `TRUE`.
 
-- hillshade:
+- shade:
 
-  Logical. Draw the classes semi-transparently over a hillshade? Default
-  `FALSE`.
+  Relief shading drawn underneath the classes: `"none"` (default),
+  `"slope"` (slopeshade) or `"hill"` (hillshade). See
+  [`plot.landform`](https://gianmarcoalberti.github.io/landform/reference/plot.landform.md).
 
 - col:
 
@@ -147,7 +152,8 @@ An object of class `"landform"`: a list with elements
 
   a categorical `SpatRaster` of the classes (integer codes with class
   names as levels and a colour table); per-class layers can be obtained
-  with [`class_layers`](class_layers.md);
+  with
+  [`class_layers`](https://gianmarcoalberti.github.io/landform/reference/class_layers.md);
 
 - `tpi`:
 
@@ -173,10 +179,10 @@ An object of class `"landform"`: a list with elements
   a list of the settings used.
 
 The object has `print`, `summary` and `plot` methods (see
-[`plot.landform`](plot.landform.md)). The map (and, with
-`descriptive = TRUE`, the bar plot of class areas) is drawn as a side
-effect when `plot = TRUE`; the object is returned invisibly in that
-case.
+[`plot.landform`](https://gianmarcoalberti.github.io/landform/reference/plot.landform.md)).
+The map (and, with `descriptive = TRUE`, the bar plot of class areas) is
+drawn as a side effect when `plot = TRUE`; the object is returned
+invisibly in that case.
 
 ## Details
 
@@ -239,12 +245,16 @@ for ArcView 3.x, v. 1.2. Jenness Enterprises.
 Weiss, A. (2001). Topographic Position and Landforms Analysis. Poster
 presentation, ESRI User Conference, San Diego, CA.
 
-See [`tpi`](tpi.md) for references on the TPI and its standardisation.
+See
+[`tpi`](https://gianmarcoalberti.github.io/landform/reference/tpi.md)
+for references on the TPI and its standardisation.
 
 ## See also
 
-[`tpi`](tpi.md), [`plot.landform`](plot.landform.md),
-[`class_layers`](class_layers.md), [`malta_dtm`](malta_dtm.md),
+[`tpi`](https://gianmarcoalberti.github.io/landform/reference/tpi.md),
+[`plot.landform`](https://gianmarcoalberti.github.io/landform/reference/plot.landform.md),
+[`class_layers`](https://gianmarcoalberti.github.io/landform/reference/class_layers.md),
+[`malta_dtm`](https://gianmarcoalberti.github.io/landform/reference/malta_dtm.md),
 [`terrain`](https://rspatial.github.io/terra/reference/terrain.html)
 
 ## Examples
@@ -288,8 +298,8 @@ sp_local <- landform(dem, scale = 9, std = "local", centre = TRUE)
 
 # }
 
-# the same, over a hillshade, with the bar plot of class areas
-plot(lf, hillshade = TRUE)
+# the same, over a slopeshade, with the bar plot of class areas
+plot(lf, shade = "slope")
 
 plot(lf, what = "area")
 

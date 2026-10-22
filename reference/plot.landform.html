@@ -33,7 +33,7 @@ landform."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Plot a landform classification</h1>
-
+      <small class="dont-index">Source: <a href="https://github.com/gianmarcoalberti/landform/blob/main/R/landform.R" class="external-link"><code>R/landform.R</code></a></small>
       <div class="d-none name"><code>plot.landform.Rd</code></div>
     </div>
 
@@ -49,7 +49,7 @@ standardised TPI surface(s), from an object returned by
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classes"</span>, <span class="st">"area"</span>, <span class="st">"tpi"</span><span class="op">)</span>,</span>
-<span>  hillshade <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  shade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"slope"</span>, <span class="st">"hill"</span><span class="op">)</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.6</span>,</span>
 <span>  leg.pos <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  leg.cex <span class="op">=</span> <span class="fl">0.8</span>,</span>
@@ -71,16 +71,17 @@ standardised TPI surface(s), from an object returned by
 <code>"tpi"</code>.</p></dd>
 
 
-<dt id="arg-hillshade">hillshade<a class="anchor" aria-label="anchor" href="#arg-hillshade"></a></dt>
-<dd><p>Logical. For <code>what = "classes"</code>, draw the classes
-semi-transparently over a hillshade of the elevation raster. Default
-<code>FALSE</code>.</p></dd>
+<dt id="arg-shade">shade<a class="anchor" aria-label="anchor" href="#arg-shade"></a></dt>
+<dd><p>Relief shading drawn underneath the classes or the TPI:
+<code>"none"</code> (default), <code>"slope"</code> (a slopeshade, that is the
+slope in grey levels from white for flat terrain to black for the
+steepest slopes), or <code>"hill"</code> (a hillshade, lit from the
+north-west at 45 degrees). See Details.</p></dd>
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
-<dd><p>Opacity of the classes relative to the hillshade drawn over
-them (0 to 1; the hillshade is drawn with opacity <code>1 - alpha</code>).
-Default <code>0.6</code>.</p></dd>
+<dd><p>Opacity (0 to 1) of the classes or TPI drawn over the shading.
+Default <code>0.6</code>. Ignored when <code>shade = "none"</code>.</p></dd>
 
 
 <dt id="arg-leg-pos">leg.pos<a class="anchor" aria-label="anchor" href="#arg-leg-pos"></a></dt>
@@ -105,18 +106,27 @@ or <code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link"
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p><code>x</code>, invisibly.</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>A slopeshade conveys relief without the directional bias of a hillshade:
+features facing away from the light are not darkened, and steepness is
+shown in the same way whatever the aspect. The grey scale is stretched
+between 0 degrees and the 99th percentile of slope, so that a few very
+steep cells do not flatten the contrast elsewhere.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dem</span> <span class="op">&lt;-</span> <span class="fu"><a href="malta_dtm.html">malta_dtm</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="landform.html">landform</a></span><span class="op">(</span><span class="va">dem</span>, scale <span class="op">=</span> <span class="fl">9</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp</span>, hillshade <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.landform-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp</span>, what <span class="op">=</span> <span class="st">"area"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp</span>, shade <span class="op">=</span> <span class="st">"slope"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.landform-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp</span>, what <span class="op">=</span> <span class="st">"tpi"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp</span>, what <span class="op">=</span> <span class="st">"area"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.landform-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp</span>, what <span class="op">=</span> <span class="st">"tpi"</span>, shade <span class="op">=</span> <span class="st">"slope"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot.landform-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

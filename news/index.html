@@ -29,7 +29,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-
+      <small>Source: <a href="https://github.com/gianmarcoalberti/landform/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
@@ -69,7 +69,7 @@
 <h3 id="plots-0-3-0">Plots<a class="anchor" aria-label="anchor" href="#plots-0-3-0"></a></h3>
 <ul><li>New colour palettes: an ordinal blue-to-brown palette for the Slope Position Classification, and hues grouped by landform family for the Landform Classification (both replace <code><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">rainbow()</a></code>). Custom colours via <code>col</code>.</li>
 <li>The legend is placed outside the map by default, so that no data are hidden (<code>leg.pos</code> still accepts the usual keywords).</li>
-<li>Optional hillshade underlay (<code>hillshade = TRUE</code>).</li>
+<li>Optional relief shading underneath the classes or the TPI: a slopeshade (<code>shade = "slope"</code>, slope in grey levels from white for flat terrain to black for the steepest slopes) or a hillshade (<code>shade = "hill"</code>), with the overlying layer drawn semi-transparently (<code>alpha</code>).</li>
 <li>The bar plot of class areas is horizontal and labelled with class names.</li>
 <li>
 <code>plot(x, what = "tpi")</code> maps the standardised TPI surface(s).</li>

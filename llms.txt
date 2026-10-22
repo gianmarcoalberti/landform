@@ -27,7 +27,7 @@ dem <- malta_dtm()
 # six-class Slope Position Classification, 9 x 9 cell window
 sp <- landform(dem, scale = 9)
 sp                  # class areas and percentages
-plot(sp, hillshade = TRUE)
+plot(sp, shade = "slope")
 
 # ten-class Landform Classification, circular neighbourhoods of 200 m and 1 km
 lf <- landform(dem, class.type = "landform.classification",
@@ -35,8 +35,9 @@ lf <- landform(dem, class.type = "landform.classification",
 plot(lf, what = "area")
 ```
 
-See the vignette, [`vignette("landform")`](articles/landform.md), for a
-full walk-through.
+See the vignette,
+[`vignette("landform")`](https://gianmarcoalberti.github.io/landform/articles/landform.md),
+for a full walk-through.
 
 ## References
 
@@ -53,24 +54,28 @@ presentation, ESRI User Conference, San Diego, CA.
 Classify a DTM into slope-position or landform classes; the result is an
 object with print(), summary() and plot() methods.
 
-- [`landform()`](landform.md) : Landform Classification
-- [`plot(`*`<landform>`*`)`](plot.landform.md) : Plot a landform
-  classification
-- [`class_layers()`](class_layers.md) : One layer per class
+- [`landform()`](https://gianmarcoalberti.github.io/landform/reference/landform.md)
+  : Landform Classification
+- [`plot(`*`<landform>`*`)`](https://gianmarcoalberti.github.io/landform/reference/plot.landform.md)
+  : Plot a landform classification
+- [`class_layers()`](https://gianmarcoalberti.github.io/landform/reference/class_layers.md)
+  : One layer per class
 
 ## Topographic Position Index
 
 The TPI surface on which the classifications are based.
 
-- [`tpi()`](tpi.md) : Topographic Position Index
+- [`tpi()`](https://gianmarcoalberti.github.io/landform/reference/tpi.md)
+  : Topographic Position Index
 
 ## Sample data
 
-- [`malta_dtm()`](malta_dtm.md) : Sample digital terrain model of Malta
+- [`malta_dtm()`](https://gianmarcoalberti.github.io/landform/reference/malta_dtm.md)
+  : Sample digital terrain model of Malta
 
 # Articles
 
 ### Get started
 
 - [Landform classification with the Topographic Position
-  Index](landform.md):
+  Index](https://gianmarcoalberti.github.io/landform/articles/landform.md):

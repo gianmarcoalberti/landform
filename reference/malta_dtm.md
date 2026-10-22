@@ -3,7 +3,9 @@
 Returns a digital terrain model (DTM) of the island of Malta (Maltese
 archipelago), bundled with the package as a GeoTIFF file and read on
 demand. The sea is coded as `NA`, which makes the dataset suitable for
-showing how [`landform`](landform.md) handles irregular study areas.
+showing how
+[`landform`](https://gianmarcoalberti.github.io/landform/reference/landform.md)
+handles irregular study areas.
 
 ## Usage
 

@@ -2,7 +2,7 @@
 
 Plots the map of the classes, a bar plot of the area of each class, or
 the standardised TPI surface(s), from an object returned by
-[`landform`](landform.md).
+[`landform`](https://gianmarcoalberti.github.io/landform/reference/landform.md).
 
 ## Usage
 
@@ -11,7 +11,7 @@ the standardised TPI surface(s), from an object returned by
 plot(
   x,
   what = c("classes", "area", "tpi"),
-  hillshade = FALSE,
+  shade = c("none", "slope", "hill"),
   alpha = 0.6,
   leg.pos = NULL,
   leg.cex = 0.8,
@@ -30,15 +30,18 @@ plot(
 
   What to plot: `"classes"` (default), `"area"`, or `"tpi"`.
 
-- hillshade:
+- shade:
 
-  Logical. For `what = "classes"`, draw the classes semi-transparently
-  over a hillshade of the elevation raster. Default `FALSE`.
+  Relief shading drawn underneath the classes or the TPI: `"none"`
+  (default), `"slope"` (a slopeshade, that is the slope in grey levels
+  from white for flat terrain to black for the steepest slopes), or
+  `"hill"` (a hillshade, lit from the north-west at 45 degrees). See
+  Details.
 
 - alpha:
 
-  Opacity of the classes relative to the hillshade drawn over them (0 to
-  1; the hillshade is drawn with opacity `1 - alpha`). Default `0.6`.
+  Opacity (0 to 1) of the classes or TPI drawn over the shading. Default
+  `0.6`. Ignored when `shade = "none"`.
 
 - leg.pos:
 
@@ -65,16 +68,25 @@ plot(
 
 `x`, invisibly.
 
+## Details
+
+A slopeshade conveys relief without the directional bias of a hillshade:
+features facing away from the light are not darkened, and steepness is
+shown in the same way whatever the aspect. The grey scale is stretched
+between 0 degrees and the 99th percentile of slope, so that a few very
+steep cells do not flatten the contrast elsewhere.
+
 ## Examples
 
 ``` r
 dem <- malta_dtm()
 sp <- landform(dem, scale = 9, plot = FALSE)
 plot(sp)
-plot(sp, hillshade = TRUE)
+
+plot(sp, shade = "slope")
 
 plot(sp, what = "area")
 
-plot(sp, what = "tpi")
+plot(sp, what = "tpi", shade = "slope", alpha = 0.5)
 
 ```

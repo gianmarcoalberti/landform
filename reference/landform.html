@@ -39,7 +39,7 @@ large TPI scale."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Landform Classification</h1>
-
+      <small class="dont-index">Source: <a href="https://github.com/gianmarcoalberti/landform/blob/main/R/landform.R" class="external-link"><code>R/landform.R</code></a></small>
       <div class="d-none name"><code>landform.Rd</code></div>
     </div>
 
@@ -72,7 +72,7 @@ large TPI scale.</p>
 <span>  lf.thr <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  slope.thr <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  hillshade <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  shade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"slope"</span>, <span class="st">"hill"</span><span class="op">)</span>,</span>
 <span>  col <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -174,9 +174,10 @@ terrain. Default <code>5</code> (Weiss 2001).</p></dd>
 <dd><p>Logical. Draw the map of the classes? Default <code>TRUE</code>.</p></dd>
 
 
-<dt id="arg-hillshade">hillshade<a class="anchor" aria-label="anchor" href="#arg-hillshade"></a></dt>
-<dd><p>Logical. Draw the classes semi-transparently over a
-hillshade? Default <code>FALSE</code>.</p></dd>
+<dt id="arg-shade">shade<a class="anchor" aria-label="anchor" href="#arg-shade"></a></dt>
+<dd><p>Relief shading drawn underneath the classes: <code>"none"</code>
+(default), <code>"slope"</code> (slopeshade) or <code>"hill"</code> (hillshade).
+See <code><a href="plot.landform.html">plot.landform</a></code>.</p></dd>
 
 
 <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
@@ -299,8 +300,8 @@ presentation, ESRI User Conference, San Diego, CA.</p>
 <span class="r-plt img"><img src="landform-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># the same, over a hillshade, with the bar plot of class areas</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lf</span>, hillshade <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># the same, over a slopeshade, with the bar plot of class areas</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lf</span>, shade <span class="op">=</span> <span class="st">"slope"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="landform-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lf</span>, what <span class="op">=</span> <span class="st">"area"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="landform-5.png" alt="" width="700" height="433"></span>

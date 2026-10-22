@@ -18,10 +18,12 @@ and made popular by Jenness’s TPI extension for ArcView (Jenness 2006):
   TPI scale.
 
 The package has three functions:
-[`landform()`](../reference/landform.md), which performs the
-classifications; [`tpi()`](../reference/tpi.md), which returns the TPI
-surface itself; and [`malta_dtm()`](../reference/malta_dtm.md), which
-loads the sample DTM used below.
+[`landform()`](https://gianmarcoalberti.github.io/landform/reference/landform.md),
+which performs the classifications;
+[`tpi()`](https://gianmarcoalberti.github.io/landform/reference/tpi.md),
+which returns the TPI surface itself; and
+[`malta_dtm()`](https://gianmarcoalberti.github.io/landform/reference/malta_dtm.md),
+which loads the sample DTM used below.
 
 ## The sample data
 
@@ -171,15 +173,19 @@ in degrees, are:
 
 All three thresholds can be changed with `tpi.thr` and `slope.thr`.
 
-The classes can be drawn semi-transparently over a hillshade, which
-helps relate them to the relief:
+The classes can be drawn semi-transparently over a relief shading, which
+helps relate them to the terrain. A slopeshade (`shade = "slope"`) shows
+the slope in grey levels, from white for flat ground to black for the
+steepest slopes; unlike a hillshade (`shade = "hill"`), it does not
+darken features just because they face away from the light. The opacity
+of the classes is set by `alpha`:
 
 ``` r
 
-plot(sp, hillshade = TRUE)
+plot(sp, shade = "slope")
 ```
 
-![](landform_files/figure-html/sp-hillshade-1.png)
+![](landform_files/figure-html/sp-slopeshade-1.png)
 
 Since the classification depends on the scale, a broader neighbourhood
 picks out broader features:
@@ -201,7 +207,7 @@ and high (≥ 1) values; plains and open slopes are separated by slope.
 
 lf <- landform(dem, class.type = "landform.classification",
                sn = 200, ln = 1000, units = "map", shape = "circle",
-               hillshade = TRUE)
+               shade = "slope")
 ```
 
 ![](landform_files/figure-html/lf-1.png)
@@ -220,20 +226,20 @@ lf <- landform(dem, class.type = "landform.classification",
 | 10 Mountain Tops, High Ridges            | ≥ 1    | ≥ 1    |
 
 The two standardised TPI surfaces on which the classification rests can
-be plotted directly (the colour scale is capped at ±3 standard
-deviations):
+be plotted directly, here over a slopeshade (the colour scale is capped
+at ±3 standard deviations):
 
 ``` r
 
-plot(lf, what = "tpi")
+plot(lf, what = "tpi", shade = "slope")
 ```
 
 ![](landform_files/figure-html/lf-tpi-1.png)
 
 ## What `landform()` returns
 
-[`landform()`](../reference/landform.md) returns an object of class
-`"landform"`, a list holding:
+[`landform()`](https://gianmarcoalberti.github.io/landform/reference/landform.md)
+returns an object of class `"landform"`, a list holding:
 
 - `classes`: a categorical `SpatRaster` of the classes, with class names
   and colours attached;
@@ -279,8 +285,10 @@ which slope cannot be computed (the outer rim of the raster and the
 cells along the coast) are left unclassified.
 
 Individual classes can be extracted as separate presence/absence layers
-with [`class_layers()`](../reference/class_layers.md), for instance to
-compute distances from ridges or to use the classes as covariates:
+with
+[`class_layers()`](https://gianmarcoalberti.github.io/landform/reference/class_layers.md),
+for instance to compute distances from ridges or to use the classes as
+covariates:
 
 ``` r
 

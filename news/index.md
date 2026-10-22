@@ -51,18 +51,21 @@ versions.
   and sized in cells or in map units (`units`; metres for
   longitude/latitude).
 - Thresholds can be changed: `tpi.thr`, `lf.thr`, `slope.thr`.
-- New function [`tpi()`](../reference/tpi.md), returning the raw or
-  standardised TPI surface.
-- New function [`class_layers()`](../reference/class_layers.md),
+- New function
+  [`tpi()`](https://gianmarcoalberti.github.io/landform/reference/tpi.md),
+  returning the raw or standardised TPI surface.
+- New function
+  [`class_layers()`](https://gianmarcoalberti.github.io/landform/reference/class_layers.md),
   returning one presence/absence layer per class.
-- New sample dataset, [`malta_dtm()`](../reference/malta_dtm.md).
+- New sample dataset,
+  [`malta_dtm()`](https://gianmarcoalberti.github.io/landform/reference/malta_dtm.md).
 - Input checks with informative error messages (window sizes, `ln > sn`,
   single-layer input, thresholds, colours).
 
 ### Changes to the returned value
 
-- [`landform()`](../reference/landform.md) now returns an object of
-  class `"landform"` with
+- [`landform()`](https://gianmarcoalberti.github.io/landform/reference/landform.md)
+  now returns an object of class `"landform"` with
   [`print()`](https://rdrr.io/r/base/print.html),
   [`summary()`](https://rspatial.github.io/terra/reference/summary.html)
   and [`plot()`](https://rspatial.github.io/terra/reference/plot.html)
@@ -86,7 +89,11 @@ versions.
   colours via `col`.
 - The legend is placed outside the map by default, so that no data are
   hidden (`leg.pos` still accepts the usual keywords).
-- Optional hillshade underlay (`hillshade = TRUE`).
+- Optional relief shading underneath the classes or the TPI: a
+  slopeshade (`shade = "slope"`, slope in grey levels from white for
+  flat terrain to black for the steepest slopes) or a hillshade
+  (`shade = "hill"`), with the overlying layer drawn semi-transparently
+  (`alpha`).
 - The bar plot of class areas is horizontal and labelled with class
   names.
 - `plot(x, what = "tpi")` maps the standardised TPI surface(s).

@@ -3,9 +3,10 @@
 Calculates the Topographic Position Index (TPI), that is the difference
 between the elevation of each cell and the mean elevation of its
 neighbourhood (Guisan et al. 1999; Weiss 2001), optionally standardised.
-This is the quantity on which [`landform`](landform.md) bases its
-classifications; it is exported so that the TPI surfaces can be
-inspected, mapped, or used in other analyses.
+This is the quantity on which
+[`landform`](https://gianmarcoalberti.github.io/landform/reference/landform.md)
+bases its classifications; it is exported so that the TPI surfaces can
+be inspected, mapped, or used in other analyses.
 
 ## Usage
 
@@ -74,7 +75,9 @@ z-scores using the mean and standard deviation of the TPI over the whole
 raster, so that values express the number of standard deviations from
 the grid mean. This is the standardisation used by Weiss (2001) and in
 Jenness's TPI extension (Jenness 2006), to which the classification
-thresholds in [`landform`](landform.md) refer.  
+thresholds in
+[`landform`](https://gianmarcoalberti.github.io/landform/reference/landform.md)
+refer.  
 With `std = "local"` the TPI of each cell is divided by the standard
 deviation of elevation within its own neighbourhood. This is the
 "deviation from mean elevation" (DEV) of Wilson and Gallant (2000),
@@ -122,7 +125,7 @@ Principles and Applications. Wiley, New York.
 
 ## See also
 
-[`landform`](landform.md),
+[`landform`](https://gianmarcoalberti.github.io/landform/reference/landform.md),
 [`focal`](https://rspatial.github.io/terra/reference/focal.html)
 
 ## Examples
